@@ -1,7 +1,7 @@
 const passport = require('passport');
 
 module.exports = app => {
-  app.get('/', () => {
+  app.get('/', (req, res) => {
     res.send({ heyHey: 'banana' });
   });
 
