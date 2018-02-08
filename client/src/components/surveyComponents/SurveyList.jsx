@@ -7,15 +7,28 @@ class SurveyList extends Component {
     this.props.fetchSurveys();
   }
 
-  countAverage(survey) {
+  countStatistics(survey) {
+    let sumOfResults = 0;
     let average = 0;
-    for (let i = 1; i <= 5; i++) {
-      average += survey[i] * i;
-    }
-    return (average / survey.numberOfRecipients).toFixed(1);
-  }
+    let responders = 0;
+    let responseRate = 0;
 
-  countrResponses(survey) {}
+    //itterate over results and sum response values and count responders
+    for (let i = 1; i <= 5; i++) {
+      if (survey[i] > 0) {
+        sumOfResults += survey[i] * i;
+        responders += survey[i];
+      }
+    }
+
+    average = (sumOfResults / responders).toFixed(1);
+    responseRate = (responders / survey.numberOfRecipients * 100).toFixed(1);
+
+    return {
+      average,
+      responseRate
+    };
+  }
 
   renderSurveys() {
     return this.props.surveys.reverse().map(survey => {
@@ -30,7 +43,8 @@ class SurveyList extends Component {
           </div>
           <div className="card-action">
             <a>Recipients: {survey.numberOfRecipients}</a>
-            <a>Average: {this.countAverage(survey)} stars</a>
+            <a>Response rate: {this.countStatistics(survey).responseRate}%</a>
+            <a>Average: {this.countStatistics(survey).average} stars</a>
           </div>
         </div>
       );
