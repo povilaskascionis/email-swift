@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Thanks = () => {
-  return <h2>Thank you for your respose!</h2>;
+  return <h3>Thank you for your respose!</h3>;
 };
 
 export default Thanks;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchSurveys } from '../../actions/index';
+import { fetchSurveys, deleteSurvey } from '../../actions';
 
 class SurveyList extends Component {
   componentDidMount() {
@@ -20,14 +20,17 @@ class SurveyList extends Component {
         responders += survey[i];
       }
     }
-
-    average = (sumOfResults / responders).toFixed(1);
-    responseRate = (responders / survey.numberOfRecipients * 100).toFixed(1);
+    average = responders !== 0 ? (sumOfResults / responders).toFixed(1) : 0;
+    responseRate = ((responders / survey.numberOfRecipients) * 100).toFixed(1);
 
     return {
       average,
       responseRate
     };
+  }
+
+  deleteSurvey(e) {
+    this.props.deleteSurvey(e.target.id);
   }
 
   renderSurveys() {
@@ -39,6 +42,15 @@ class SurveyList extends Component {
             <p>{survey.body}</p>
             <p className="right">
               Sent on: {new Date(survey.dateSent).toLocaleDateString()}
+              <i
+                alt="Delete survey"
+                id={survey._id}
+                onClick={this.deleteSurvey.bind(this)}
+                style={{ cursor: 'pointer' }}
+                className="right material-icons small"
+              >
+                delete_forever
+              </i>
             </p>
           </div>
           <div className="card-action">
@@ -60,4 +72,7 @@ function mapStateToProps({ surveys }) {
   return { surveys };
 }
 
-export default connect(mapStateToProps, { fetchSurveys })(SurveyList);
+export default connect(
+  mapStateToProps,
+  { fetchSurveys, deleteSurvey }
+)(SurveyList);

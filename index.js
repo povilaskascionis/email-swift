@@ -10,7 +10,10 @@ require('./models/Survey');
 require('./services/passport');
 
 mongoose.Promise = global.Promise;
-mongoose.connect(keys.mongoURL);
+mongoose.connect(
+  keys.mongoURL,
+  { useMongoClient: true }
+);
 
 const app = express();
 

@@ -6,6 +6,8 @@
 # testing
 /coverage
 
+/config/dev.js
+
 # production
 /build
 

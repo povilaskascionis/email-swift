@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SurveyList from './surveyComponents/SurveyList.jsx';
+import SurveyList from './surveyComponents/SurveyList';
 
 const Dashboard = () => {
   return (

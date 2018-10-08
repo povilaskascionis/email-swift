@@ -16,7 +16,7 @@ module.exports = app => {
   });
 
   app.get('/api/surveys/:surveyId/:choice', (req, res) => {
-    res.send('Thank you for participating');
+    res.redirect('/thankyou');
   });
 
   app.post('/api/surveys/webhooks', (req, res) => {
@@ -78,5 +78,11 @@ module.exports = app => {
     } catch (err) {
       res.status(422).send(err);
     }
+  });
+
+  app.delete('/api/surveys/:surveyId', requireLogin, async (req, res) => {
+    await Survey.findOneAndRemove({ _id: req.params.surveyId });
+    const surveys = await Survey.find();
+    res.send(surveys);
   });
 };
